@@ -8,11 +8,11 @@ plugins {
 
 android {
     namespace = "com.example.uaspam"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.uaspam"
-        minSdk = 24
+        minSdk = 23
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -81,14 +81,11 @@ android {
         implementation(libs.retrofit2.kotlinx.serialization.converter)
         implementation(libs.retrofit)
         implementation(libs.okhttp)
+        implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
         implementation(libs.coil.compose)
         implementation(libs.kotlinx.serialization.json)
-
-
-
         implementation(libs.androidx.lifecycle.viewmodel.compose)
         implementation(libs.androidx.navigation.compose)
-
     }
 }
 
