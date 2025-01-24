@@ -7,7 +7,7 @@ import okio.IOException
 interface BukuRepository {
     suspend fun insertBuku(buku: Buku)
 
-    suspend fun getBuku():List<Buku>
+    suspend fun getBuku(): List<Buku>
 
     suspend fun updateBuku(id: String,buku: Buku)
 
@@ -24,13 +24,13 @@ class NetworkBukuRepository(
         bukuApiService.insertBuku(buku)
     }
 
-    override suspend fun updateBuku(id: String, buku: Buku) {
-        bukuApiService.updateBuku(id, buku)
+    override suspend fun updateBuku(idBuku: String, buku: Buku) {
+        bukuApiService.updateBuku(idBuku, buku)
     }
 
-    override suspend fun deleteBuku(id: String) {
+    override suspend fun deleteBuku(idBuku: String) {
         try {
-            val response = bukuApiService.deleteBuku(id)
+            val response = bukuApiService.deleteBuku(idBuku)
             if (!response.isSuccessful) {
                 throw IOException(
                     "Failed to delete buku. HTTP Status code:" +
@@ -45,12 +45,11 @@ class NetworkBukuRepository(
         }
     }
 
-    override suspend fun getBukubyId(id: String): Buku {
-        return bukuApiService.getBukubyId(id)
-    }
-
     override suspend fun getBuku(): List<Buku> {
         return bukuApiService.getAllBuku()
+    }
+    override suspend fun getBukubyId(idBuku: String): Buku {
+        return bukuApiService.getBukubyId(idBuku)
     }
 }
 
