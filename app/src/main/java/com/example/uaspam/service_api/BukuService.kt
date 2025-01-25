@@ -8,29 +8,28 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
-import retrofit2.http.Query
+import retrofit2.http.Path
+
 
 interface BukuService {
     @Headers(
-        "Accept:application/json",
-        "Content-Type:application/json",
+        "Accept: application/json",
+        "Content-Type: application/json",
     )
 
-    @POST("buku")
+    @POST("store")
     suspend fun insertBuku(@Body buku: Buku)
 
-    @GET("buku")
+    @GET(".")
     suspend fun getAllBuku(): List<Buku>
 
-    @GET("buku/:id")
-    suspend fun getBukubyId(@Query("id") id:String):Buku
+    @GET("{id_buku}")
+    suspend fun getBukubyId(@Path("id_buku") id:String): Buku
 
-    @PUT("buku/:id")
-    suspend fun updateBuku(@Query("id") id:String, @Body buku: Buku)
+    @PUT("{id_buku}")
+    suspend fun updateBuku(@Path("id_buku") id:String, @Body buku: Buku)
 
-    @DELETE("buku/:id")
-    suspend fun deleteBuku(@Query("id") id:String): Response<Void>
-
-
+    @DELETE("{id_buku}")
+    suspend fun deleteBuku(@Path("id_buku") id:String): Response<Void>
 
 }
