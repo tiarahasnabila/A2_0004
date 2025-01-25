@@ -26,7 +26,9 @@ fun BukuApp(
                 .fillMaxSize()
                 .padding(it)
         ){
-            PengelolaHalaman()
+            PengelolaHalaman(
+                modifier = Modifier
+            )
         }
     }
 }
