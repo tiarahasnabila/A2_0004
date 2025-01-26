@@ -1,4 +1,4 @@
-package com.example.uaspam
+package com.example.uaspam.ui
 
 import android.app.Application
 import com.example.uaspam.di.AppContainer
