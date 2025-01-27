@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
@@ -19,20 +18,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.uaspam.ui.buku.viewmodel.InsertBukuViewModel
 import com.example.uaspam.ui.buku.viewmodel.InsertUiEvent
 import com.example.uaspam.ui.buku.viewmodel.InsertUiState
-import com.example.uaspam.ui.buku.viewmodel.PenyediaViewModel
+import com.example.uaspam.ui.PenyediaViewModel
 import com.example.uaspam.ui.customewidget.CostumeTopAppBar
 import com.example.uaspam.ui.navigation.DestinasiNavigasi
 import kotlinx.coroutines.launch
 
 object DestinasiEntry: DestinasiNavigasi {
     override val route = "item_entry"
-    override val titleRes = "Entry Mhs"
+    override val titleRes = "Tambah Buku"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,7 +56,7 @@ fun InsertBukuView(
     ){ innerPadding ->
         EntryBody(
             insertUiState = viewModel.uiState,
-            onSiswaValueChange = viewModel::updateInsertBukuState,
+            onBukuValueChange = viewModel::updateInsertBukuState,
             onSaveClick = {
                 coroutineScope.launch {
                     viewModel.insertBuku()
@@ -76,7 +74,7 @@ fun InsertBukuView(
 @Composable
 fun EntryBody(
     insertUiState: InsertUiState,
-    onSiswaValueChange: (InsertUiEvent) -> Unit,
+    onBukuValueChange: (InsertUiEvent) -> Unit,
     onSaveClick:() -> Unit,
     modifier: Modifier = Modifier
 ){
@@ -86,7 +84,7 @@ fun EntryBody(
     ){
         FormInput(
             insertUiEvent = insertUiState.insertUiEvent,
-            onValueChange = onSiswaValueChange,
+            onValueChange = onBukuValueChange,
             modifier = Modifier.fillMaxWidth()
         )
         Button (
@@ -99,7 +97,6 @@ fun EntryBody(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormInput(
     insertUiEvent: InsertUiEvent,
@@ -111,6 +108,19 @@ fun FormInput(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ){
+        OutlinedTextField(
+            value = insertUiEvent.idBuku.toString(), // Konversi Int ke String untuk ditampilkan
+            onValueChange = { input ->
+                val newValue = input.toIntOrNull() // Konversi String ke Int
+                if (newValue != null) {
+                    onValueChange(insertUiEvent.copy(idKategori = newValue))
+                }
+            },
+            label = { Text("Id Buku") },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
         OutlinedTextField(
             value = insertUiEvent.namaBuku,
             onValueChange = {onValueChange(insertUiEvent.copy(namaBuku = it))},

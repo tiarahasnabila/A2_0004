@@ -12,16 +12,12 @@ import kotlinx.coroutines.launch
 import okio.IOException
 
 sealed class HomeuiState{
-    data class Success(
-        val buku: List<Buku>
-    ): HomeuiState()
+    data class Success(val buku: List<Buku>): HomeuiState()
     object Error: HomeuiState()
     object Loading: HomeuiState()
 }
 
-class HomeBukuViewModel(
-    private val buku: BukuRepository
-): ViewModel(){
+class HomeBukuViewModel(private val buku: BukuRepository): ViewModel(){
     var bukuUiState: HomeuiState by mutableStateOf(HomeuiState.Loading)
         private set
 

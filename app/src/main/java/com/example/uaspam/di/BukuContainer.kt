@@ -18,11 +18,11 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import java.util.concurrent.TimeUnit
+
 
 interface AppContainer{
     val bukuRepository: BukuRepository
-//    val penulisRepository :  PenulisRepository
+    val penulisRepository :  PenulisRepository
     val penerbitRepository : PenerbitRepository
     val kategoriRepository : KategoriRepository
 }
@@ -47,20 +47,20 @@ class BukuContainer : AppContainer {
         NetworkBukuRepository(bukuApiService)
     }
 
-//    private val penulisService: PenulisService by lazy {
-//        retrofit.create(PenulisService::class.java)
-//    }
-//
-//    override val penulisRepository: PenulisRepository by lazy {
-//        NetworkPenulisRepository(penulisService)
-//    }
-//
-    private val penerbitService: PenerbitService by lazy {
-        retrofit.create(penerbitService::class.java)
+    private val penulisApiService: PenulisService by lazy {
+        retrofit.create(PenulisService::class.java)
+    }
+
+    override val penulisRepository: PenulisRepository by lazy {
+        NetworkPenulisRepository(penulisApiService)
+    }
+
+    private val penerbitApiService: PenerbitService by lazy {
+        retrofit.create(PenerbitService::class.java)
     }
 
     override val penerbitRepository: PenerbitRepository by lazy {
-        NetworkPenerbitRepository(penerbitService)
+        NetworkPenerbitRepository(penerbitApiService)
     }
 
     private val kategoriApiService: KategoriService by lazy {
