@@ -15,6 +15,11 @@ object DestinasiHome : DestinasiNavigasi {
     override val titleRes = "Home Buku"
 }
 
+object DestinasiEntryBuku: DestinasiNavigasi {
+    override val route = "item_entry"
+    override val titleRes = "Tambah Buku"
+}
+
 object DestinasiDetail : DestinasiNavigasi {
     override val route = "detail"
     override val titleRes = "Detail Buku"
@@ -30,6 +35,11 @@ object DestinasiUpdate: DestinasiNavigasi {
 object DestinasiKategori : DestinasiNavigasi {
     override val route = "kategori"
     override val titleRes = "Home Kategori"
+}
+
+object DestinasiEtKategori: DestinasiNavigasi {
+    override val route = "item_entry"
+    override val titleRes = "Tambah Kategori"
 }
 
 object DestinasiDKategori : DestinasiNavigasi {
