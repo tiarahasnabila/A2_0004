@@ -17,19 +17,19 @@ interface BukuService {
         "Content-Type: application/json",
     )
 
-    @POST("store")
+    @POST("buku/store")
     suspend fun insertBuku(@Body buku: Buku)
 
-    @GET(".")
+    @GET("buku")
     suspend fun getAllBuku(): List<Buku>
 
-    @GET("{id_buku}")
+    @GET("buku/{id_buku}")
     suspend fun getBukubyId(@Path("id_buku") id:String): Buku
 
-    @PUT("{id_buku}")
+    @PUT("buku/{id_buku}")
     suspend fun updateBuku(@Path("id_buku") id:String, @Body buku: Buku)
 
-    @DELETE("{id_buku}")
+    @DELETE("buku/{id_buku}")
     suspend fun deleteBuku(@Path("id_buku") id:String): Response<Void>
 
 }
