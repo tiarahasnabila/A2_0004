@@ -17,3 +17,17 @@ sealed class HomeuiState{
     object Loading: HomeuiState()
 }
 
+
+
+    fun deletePenulis(id: String){
+        viewModelScope.launch {
+            try {
+                penulis.deletePenulis(id)
+            } catch (e: IOException){
+                HomeuiState.Error
+            } catch (e: HttpException){
+                HomeuiState.Error
+            }
+        }
+    }
+}
