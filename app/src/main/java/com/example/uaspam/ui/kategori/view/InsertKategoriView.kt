@@ -97,3 +97,57 @@ fun EntryBody(
     }
 }
 
+@Composable
+fun FormInput(
+    insertUiEvent: InsertUiEvent,
+    modifier: Modifier = Modifier,
+    onValueChange: (InsertUiEvent) -> Unit = {},
+    enabled: Boolean = true
+){
+    Column (
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ){
+        OutlinedTextField(
+            value = insertUiEvent.idKategori.toString(), // Konversi Int ke String untuk ditampilkan
+            onValueChange = { input ->
+                val newValue = input.toIntOrNull() // Konversi String ke Int
+                if (newValue != null) {
+                    onValueChange(insertUiEvent.copy(idKategori = newValue))
+                }
+            },
+            label = { Text("Id Kategori") },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
+
+        OutlinedTextField(
+            value = insertUiEvent.namaKategori,
+            onValueChange = {onValueChange(insertUiEvent.copy(namaKategori = it))},
+            label = { Text("Nama Kategori") },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
+        OutlinedTextField(
+            value = insertUiEvent.deskripsiKategori,
+            onValueChange = {onValueChange(insertUiEvent.copy(deskripsiKategori = it))},
+            label = { Text("Deskripsi Kategori") },
+            modifier = Modifier.fillMaxWidth(),
+            enabled = enabled,
+            singleLine = true
+        )
+
+        if(enabled){
+            Text(
+                text = "Isi Semua Data!",
+                modifier = Modifier.padding(12.dp)
+            )
+        }
+        Divider(
+            thickness = 8.dp,
+            modifier = Modifier.padding(12.dp)
+        )
+    }
+}
