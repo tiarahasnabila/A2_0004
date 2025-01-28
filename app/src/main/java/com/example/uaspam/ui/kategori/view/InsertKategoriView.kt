@@ -33,3 +33,41 @@ object DestinasiEntry: DestinasiNavigasi {
     override val titleRes = "Tambah Kategori"
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun InsertKategoriView(
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: InsertKategoriViewModel = viewModel(factory = PenyediaViewModel.Factory)
+){
+    val coroutineScope = rememberCoroutineScope()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    Scaffold (
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiEntry.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack
+            )
+        }
+    ){ innerPadding ->
+        EntryBody(
+            insertUiState = viewModel.uiState,
+            onKategoriValueChange = viewModel::updateInsertKategoriState,
+            onSaveClick = {
+                coroutineScope.launch {
+                    viewModel.insertKategori()
+                    navigateBack()
+                }
+            },
+            modifier = Modifier
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .fillMaxWidth()
+        )
+    }
+}
+
