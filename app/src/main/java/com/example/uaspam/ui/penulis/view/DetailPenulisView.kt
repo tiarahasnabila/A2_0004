@@ -162,5 +162,32 @@ fun BodyDetailPenulis(
 }
 
 
+@Composable
+fun ItemDetailPenulis(
+    modifier: Modifier = Modifier,
+    penulis: Penulis,
+){
+    // Log the idPenulis
+    Log.d("Penulis ID", "Penulis ID: ${penulis.idPenulis}")
+
+    Card(
+        modifier = modifier.fillMaxWidth().padding(top = 20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+        ) {
+            ComponentDetailPenulis(judul = "Id Penerbit", isinya = penulis.idPenulis.toString())
+            ComponentDetailPenulis(judul = "Nama Penerbit", isinya = penulis.namaPenulis)
+            ComponentDetailPenulis(judul = "Alamat Penerbit", isinya = penulis.biografi)
+            ComponentDetailPenulis(judul = "Telepon Penerbit", isinya = penulis.kontak)
+        }
+    }
+}
+
 
 
