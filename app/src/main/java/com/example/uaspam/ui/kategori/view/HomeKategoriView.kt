@@ -180,4 +180,30 @@ fun OnError(retryAction: () -> Unit, modifier: Modifier){
     }
 }
 
+@Composable
+fun KategoriLayout(
+    kategori: List<Kategori>,
+    modifier: Modifier = Modifier,
+    onDetailClick: (String) -> Unit,
+    onDeleteClick: (Kategori) -> Unit = {}
+){
+    LazyColumn (
+        modifier = modifier,
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ){
+        items(kategori) { kategori ->
+            KategoriCard(
+                kategori = kategori,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onDetailClick(kategori.idKategori.toString()) },
+                onDeleteClick = {
+                    onDeleteClick(kategori)
+                }
+            )
+        }
+    }
+}
+
 
