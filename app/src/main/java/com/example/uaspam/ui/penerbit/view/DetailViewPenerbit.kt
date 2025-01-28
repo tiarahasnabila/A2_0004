@@ -51,3 +51,63 @@ object DestinasiDetail : DestinasiNavigasi {
     val routeWithArgs = "$route/{$IDPENERBIT}"
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailViewPenerbit(
+    modifier: Modifier = Modifier,
+    navigateBack: () -> Unit,
+    onEditClick: () -> Unit,
+    onDeleteClick: () -> Unit = { },
+    viewModel: DetailPenerbitViewModel = viewModel(factory = PenyediaViewModel.Factory)
+){
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiDetail.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onEditClick,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit Penerbit",
+                )
+            }
+        }
+    ) { innerPadding ->
+        var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
+
+        BodyDetailPenerbit(
+            detailUiState = viewModel.detailUiState,
+            modifier = Modifier.padding(innerPadding),
+            onDeleteClick = {
+                deleteConfirmationRequired = true
+            }
+        )
+
+        if (deleteConfirmationRequired) {
+            DeleteConfirmationDialog(
+                onDeleteConfirm = {
+                    viewModel.deletePenerbit()
+                    onDeleteClick()
+                    deleteConfirmationRequired = false
+                },
+                onDeleteCancel = {
+                    deleteConfirmationRequired = false
+                },
+                modifier = Modifier.padding(8.dp)
+            )
+        }
+    }
+}
+
