@@ -61,4 +61,31 @@ class DetailPenulisViewModel (
         }
     }
 
+    data class DetailUiState(
+        val detailUiEvent: InsertUiEvent = InsertUiEvent(),
+        val isLoading: Boolean = false,
+        val isError: Boolean = false,
+        val errorMessage: String = ""
+    ){
+        val isUiEventEmpty: Boolean
+            get() = detailUiEvent == InsertUiEvent()
 
+        val isUiEventNotEmpty: Boolean
+            get() = detailUiEvent != InsertUiEvent()
+    }
+
+    fun Penulis.toDetailUiEvent(): InsertUiEvent {
+        return InsertUiEvent(
+            idPenulis = idPenulis,
+            namaPenulis = namaPenulis,
+            biografi = biografi,
+            kontak = kontak
+        )
+    }
+
+    data class PenulisUiEvent(
+        val idPenulis : String = "",
+        val namaPenulis : String = "",
+        val biografi : String = "",
+        val kontak : String = ""
+    )
