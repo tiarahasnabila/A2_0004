@@ -38,3 +38,15 @@ class HomeKategoriViewModel(private val kategori: KategoriRepository): ViewModel
         }
     }
 
+    fun deleteKategori(id: String){
+        viewModelScope.launch {
+            try {
+                kategori.deleteKategori(id)
+            } catch (e: IOException){
+                HomeuiState.Error
+            } catch (e: HttpException){
+                HomeuiState.Error
+            }
+        }
+    }
+}
