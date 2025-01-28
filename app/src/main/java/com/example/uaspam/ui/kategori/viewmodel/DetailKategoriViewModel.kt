@@ -25,3 +25,41 @@ class DetailKategoriViewModel(
         getKategoribyId()
     }
 
+    private fun getKategoribyId() {
+        viewModelScope.launch {
+            detailUiState = DetailUiState(isLoading = true)
+            try {
+                val result = kategoriRepository.getKategoribyId(idKategori)
+                detailUiState = DetailUiState(
+                    detailUiEvent = result.toDetailUiEvent(),
+                    isLoading = false
+                )
+            } catch (e: Exception) {
+                detailUiState = DetailUiState(
+                    isLoading = false,
+                    isError = true,
+                    errorMessage = e.message ?: "Unknown"
+                )
+            }
+        }
+    }
+
+    fun deleteKategori() {
+        viewModelScope.launch {
+            detailUiState = DetailUiState(isLoading = true)
+            try {
+                kategoriRepository.deleteKategori(idKategori)
+
+                detailUiState = DetailUiState(isLoading = false)
+            } catch (e: Exception) {
+                detailUiState = DetailUiState(
+                    isLoading = false,
+                    isError = true,
+                    errorMessage = e.message ?: "Unknown Error"
+                )
+            }
+        }
+    }
+}
+
+
