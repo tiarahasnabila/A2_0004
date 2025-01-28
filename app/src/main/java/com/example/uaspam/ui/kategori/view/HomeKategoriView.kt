@@ -152,4 +152,32 @@ fun HomeStatus(
     }
 }
 
+@Composable
+fun OnLoading(modifier: Modifier = Modifier){
+    Image(
+        modifier = modifier
+            .size(100.dp)
+            .padding(40.dp),
+        painter = painterResource(R.drawable.gambar),
+        contentDescription = stringResource(R.string.loading)
+    )
+}
+
+@Composable
+fun OnError(retryAction: () -> Unit, modifier: Modifier){
+    Column (
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Image(painter = painterResource(id = R.drawable.gambarlagi), contentDescription = ""
+        )
+        Text(text = stringResource(id = R.string.loading_failed),
+            modifier = Modifier.padding(16.dp))
+        Button(onClick = retryAction) {
+            Text(stringResource(R.string.retry))
+        }
+    }
+}
+
 
