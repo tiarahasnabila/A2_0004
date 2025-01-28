@@ -188,3 +188,49 @@ fun ItemDetailPenerbit(
     }
 }
 
+@Composable
+fun ComponentDetailPenerbit(
+    modifier: Modifier = Modifier,
+    judul: String,
+    isinya: String,
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "$judul:",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Gray
+        )
+        Text(
+            text = isinya,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+}
+
+@Composable
+private fun DeleteConfirmationDialog(
+    onDeleteConfirm: () -> Unit,
+    onDeleteCancel: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    AlertDialog(
+        onDismissRequest = { /* Do nothing */ },
+        title = { Text("Delete Data") },
+        text = { Text("Apakah anda yakin ingin menghapus data?") },
+        dismissButton = {
+            TextButton(onClick = { onDeleteCancel() }) {
+                Text(text = "Cancel")
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { onDeleteConfirm() }) {
+                Text(text = "Yes")
+            }
+        }
+    )
+}
