@@ -161,3 +161,30 @@ fun BodyDetailPenerbit(
 }
 
 
+@Composable
+fun ItemDetailPenerbit(
+    modifier: Modifier = Modifier,
+    penerbit: Penerbit,
+){
+
+    // Log the idPenerbit
+    Log.d("PenerbitID", "Penerbit ID: ${penerbit.idPenerbit}")
+    Card(
+        modifier = modifier.fillMaxWidth().padding(top = 20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+        ) {
+            ComponentDetailPenerbit(judul = "Id Penerbit", isinya = penerbit.idPenerbit.toString())
+            ComponentDetailPenerbit(judul = "Nama Penerbit", isinya = penerbit.namaPenerbit)
+            ComponentDetailPenerbit(judul = "Alamat Penerbit", isinya = penerbit.alamatPenerbit)
+            ComponentDetailPenerbit(judul = "Telepon Penerbit", isinya = penerbit.teleponPenerbit)
+        }
+    }
+}
+
