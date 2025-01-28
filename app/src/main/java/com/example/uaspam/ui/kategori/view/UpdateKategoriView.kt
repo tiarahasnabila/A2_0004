@@ -22,3 +22,38 @@ object DestinasiUpKategori : DestinasiNavigasi {
     const val IDKATEGORI = "idKategori"
     val routeWithArgs = "$route/{$IDKATEGORI}"
 }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun UpdateKategoriView(
+    NavigateBack:() -> Unit,
+    onNavigate:()-> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: UpdateKategoriViewModel = viewModel(factory = PenyediaViewModel.Factory)
+){
+    val coroutineScope = rememberCoroutineScope()
+    Scaffold (
+        modifier = modifier,
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiUpKategori.titleRes,
+                canNavigateBack = true,
+                navigateUp = NavigateBack,
+            )
+        }
+    ){ padding ->
+        EntryBody(
+            modifier = Modifier.padding(padding),
+            onKategoriValueChange = viewModel::updateInsertKategoriState,
+            insertUiState = viewModel.updateUiState,
+            onSaveClick = {
+                coroutineScope.launch {
+                    viewModel.updateData()
+                    delay(600)
+                    withContext(Dispatchers.Main) {
+                        onNavigate()
+                    }
+                }
+            }
+        )
+    }
+}
