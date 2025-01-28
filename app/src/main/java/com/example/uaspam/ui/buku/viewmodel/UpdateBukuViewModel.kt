@@ -10,7 +10,21 @@ import com.example.uaspam.repository.BukuRepository
 import com.example.uaspam.ui.buku.view.DestinasiUpdate
 import kotlinx.coroutines.launch
 
+class UpdateBukuViewModel(
+    savedStateHandle: SavedStateHandle,
+    private val bukuRepository:BukuRepository
+): ViewModel(){
+    var updateUiState by mutableStateOf(InsertUiState())
+        private set
 
+    private val _idBuku: String = checkNotNull(savedStateHandle[DestinasiUpdate.IDBUKU])
+
+    init {
+        viewModelScope.launch {
+            updateUiState = bukuRepository.getBukubyId(_idBuku)
+                .toUiStateBuku()
+        }
+    }
 
     fun updateInsertBukuState(insertUiEvent: InsertUiEvent){
         updateUiState = InsertUiState(insertUiEvent = insertUiEvent)
