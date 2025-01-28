@@ -43,13 +43,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import com.example.uaspam.R
 import com.example.uaspam.model.Buku
 import com.example.uaspam.ui.buku.viewmodel.HomeBukuViewModel
 import com.example.uaspam.ui.buku.viewmodel.HomeuiState
 import com.example.uaspam.ui.PenyediaViewModel
-import com.example.uaspam.ui.customewidget.CostumeTopAppBar
+import com.example.uaspam.ui.navigation.CostumeTopAppBar
 import com.example.uaspam.ui.navigation.DestinasiNavigasi
 
 object DestinasiHome : DestinasiNavigasi {
@@ -63,6 +62,7 @@ fun HomeBukuView(
     navigateToItemEntry: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit,
+    onBackClick: () -> Unit = {},
     viewModel: HomeBukuViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ){
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -75,13 +75,15 @@ fun HomeBukuView(
         topBar = {
             CostumeTopAppBar(
                 title = DestinasiHome.titleRes,
-                canNavigateBack = false,
+                canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
+//                onBackClick = onBackClick,
                 onRefresh = {
                     viewModel.getBuku()
                 }
             )
         },
+
         floatingActionButton = {
             FloatingActionButton(
                 onClick = navigateToItemEntry,
