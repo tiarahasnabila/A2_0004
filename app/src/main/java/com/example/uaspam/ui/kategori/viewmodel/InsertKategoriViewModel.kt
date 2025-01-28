@@ -28,3 +28,28 @@ class InsertKategoriViewModel (private val kategori: KategoriRepository): ViewMo
     }
 }
 
+data class InsertUiState(
+    val insertUiEvent: InsertUiEvent = InsertUiEvent()
+)
+
+data class InsertUiEvent(
+    val idKategori: Int = 0,
+    val namaKategori: String = "",
+    val deskripsiKategori: String = ""
+)
+
+fun InsertUiEvent.toKategori(): Kategori = Kategori(
+    idKategori = idKategori,
+    namaKategori = namaKategori,
+    deskripsiKategori = deskripsiKategori
+)
+
+fun Kategori.toUiStateKategori():InsertUiState = InsertUiState(
+    insertUiEvent = toInsertUiEvent()
+)
+
+fun Kategori.toInsertUiEvent():InsertUiEvent = InsertUiEvent(
+    idKategori = idKategori,
+    namaKategori = namaKategori,
+    deskripsiKategori = deskripsiKategori
+)
