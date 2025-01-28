@@ -120,4 +120,36 @@ fun HomeKategoriView(
     }
 }
 
+@Composable
+fun HomeStatus(
+    homeuiState: HomeuiState,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDeleteClick: (Kategori) -> Unit = {},
+    onDetailClick: (String) -> Unit
+){
+    when (homeuiState){
+        is HomeuiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+
+        is HomeuiState.Success ->
+            if (homeuiState.kategori.isEmpty()){
+                return Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+                    Text(text = "Tidak ada data Kategori")
+                }
+            }else {
+                KategoriLayout(
+                    kategori = homeuiState.kategori,
+                    modifier=modifier.fillMaxWidth(),
+                    onDetailClick = {
+                        onDetailClick(it.toString())
+                    },
+                    onDeleteClick = {
+                        onDeleteClick(it)
+                    }
+                )
+            }
+        is HomeuiState.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
+    }
+}
+
 
