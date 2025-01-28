@@ -63,7 +63,7 @@ fun HalamanHome(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(
-                    text = "Selamat Datang di Toko",
+                    text = "Selamat Datang di Perpustakaan",
                     modifier = Modifier.padding(30.dp),
                     color = colorResource(id = R.color.purple_200),
                     fontSize = 32.sp,
