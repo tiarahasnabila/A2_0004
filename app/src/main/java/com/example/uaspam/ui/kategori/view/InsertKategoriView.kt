@@ -71,3 +71,29 @@ fun InsertKategoriView(
     }
 }
 
+@Composable
+fun EntryBody(
+    insertUiState: InsertUiState,
+    onKategoriValueChange: (InsertUiEvent) -> Unit,
+    onSaveClick:() -> Unit,
+    modifier: Modifier = Modifier
+){
+    Column (
+        verticalArrangement = Arrangement.spacedBy(18.dp),
+        modifier = modifier.padding(12.dp)
+    ){
+        FormInput(
+            insertUiEvent = insertUiState.insertUiEvent,
+            onValueChange = onKategoriValueChange,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Button (
+            onClick = onSaveClick,
+            shape = MaterialTheme.shapes.small,
+            modifier = Modifier.fillMaxWidth()
+        ){
+            Text(text = "Simpan")
+        }
+    }
+}
+
