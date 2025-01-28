@@ -51,3 +51,63 @@ object DestinasiDetail: DestinasiNavigasi {
     val routeWithArgs = "$route/{$IDBUKU}"
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailView(
+    modifier: Modifier = Modifier,
+    navigateBack: () -> Unit,
+    onEditClick: () -> Unit,
+    onDeleteClick: () -> Unit = { },
+    viewModel: DetailBukuViewModel = viewModel(factory = PenyediaViewModel.Factory)
+){
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiDetail.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onEditClick,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit Buku",
+                )
+            }
+        }
+    ) { innerPadding ->
+        var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
+
+        BodyDetailBuku(
+            detailUiState = viewModel.detailUiState,
+            modifier = Modifier.padding(innerPadding),
+            onDeleteClick = {
+                deleteConfirmationRequired = true
+            }
+        )
+
+        if (deleteConfirmationRequired) {
+            DeleteConfirmationDialog(
+                onDeleteConfirm = {
+                    viewModel.deleteBuku()
+                    onDeleteClick()
+                    deleteConfirmationRequired = false
+                },
+                onDeleteCancel = {
+                    deleteConfirmationRequired = false
+                },
+                modifier = Modifier.padding(8.dp)
+            )
+        }
+    }
+}
+
