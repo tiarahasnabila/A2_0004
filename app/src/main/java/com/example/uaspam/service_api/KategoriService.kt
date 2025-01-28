@@ -8,26 +8,26 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.PUT
-import retrofit2.http.Query
+import retrofit2.http.Path
 
 interface KategoriService {
     @Headers(
-        "Accept : application/json",
-        "Content-Type : application/json",
+        "Accept: application/json",
+        "Content-Type: application/json",
     )
 
-    @POST("kategori")
+    @POST("kategori/store")
     suspend fun insertKategori(@Body kategori: Kategori)
 
     @GET("kategori")
     suspend fun getAllKategori(): List<Kategori>
 
-    @GET("kategori/:id")
-    suspend fun getKategoribyId(@Query("id") id:String): Kategori
+    @GET("kategori/{id_kategori}")
+    suspend fun getKategoribyId(@Path("id_kategori") id:String): Kategori
 
-    @PUT("kategori/:id")
-    suspend fun updateKategori(@Query("id") id:String, @Body kategori: Kategori)
+    @PUT("kategori/{id_kategori")
+    suspend fun updateKategori(@Path("id_kategori") id:String, @Body kategori: Kategori)
 
-    @DELETE("kategori/:id")
-    suspend fun deleteKategori(@Query("id") id:String): Response<Void>
+    @DELETE("kategori/{id_kategori}")
+    suspend fun deleteKategori(@Path("id_kategori") id:String): Response<Void>
 }
