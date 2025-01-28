@@ -20,11 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.uaspam.model.Kategori
 import com.example.uaspam.ui.buku.viewmodel.InsertBukuViewModel
 import com.example.uaspam.ui.buku.viewmodel.InsertUiEvent
 import com.example.uaspam.ui.buku.viewmodel.InsertUiState
 import com.example.uaspam.ui.PenyediaViewModel
-import com.example.uaspam.ui.customewidget.CostumeTopAppBar
+import com.example.uaspam.ui.navigation.CostumeTopAppBar
 import com.example.uaspam.ui.navigation.DestinasiNavigasi
 import kotlinx.coroutines.launch
 
@@ -103,11 +104,11 @@ fun FormInput(
     modifier: Modifier = Modifier,
     onValueChange: (InsertUiEvent) -> Unit = {},
     enabled: Boolean = true
-){
-    Column (
+) {
+    Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(12.dp)
-    ){
+    ) {
         OutlinedTextField(
             value = insertUiEvent.idBuku.toString(), // Konversi Int ke String untuk ditampilkan
             onValueChange = { input ->
@@ -123,7 +124,7 @@ fun FormInput(
         )
         OutlinedTextField(
             value = insertUiEvent.namaBuku,
-            onValueChange = {onValueChange(insertUiEvent.copy(namaBuku = it))},
+            onValueChange = { onValueChange(insertUiEvent.copy(namaBuku = it)) },
             label = { Text("Nama Buku") },
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
@@ -131,7 +132,7 @@ fun FormInput(
         )
         OutlinedTextField(
             value = insertUiEvent.deskripsiBuku,
-            onValueChange = {onValueChange(insertUiEvent.copy(deskripsiBuku = it))},
+            onValueChange = { onValueChange(insertUiEvent.copy(deskripsiBuku = it)) },
             label = { Text("Deskripsi Buku") },
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
@@ -139,7 +140,7 @@ fun FormInput(
         )
         OutlinedTextField(
             value = insertUiEvent.tanggalTerbit,
-            onValueChange = {onValueChange(insertUiEvent.copy(tanggalTerbit = it))},
+            onValueChange = { onValueChange(insertUiEvent.copy(tanggalTerbit = it)) },
             label = { Text("Tanggal Terbit") },
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
@@ -147,7 +148,7 @@ fun FormInput(
         )
         OutlinedTextField(
             value = insertUiEvent.statusBuku,
-            onValueChange = {onValueChange(insertUiEvent.copy(statusBuku = it))},
+            onValueChange = { onValueChange(insertUiEvent.copy(statusBuku = it)) },
             label = { Text("Status Buku") },
             modifier = Modifier.fillMaxWidth(),
             enabled = enabled,
@@ -195,7 +196,7 @@ fun FormInput(
             singleLine = true
         )
 
-        if(enabled){
+        if (enabled) {
             Text(
                 text = "Isi Semua Data!",
                 modifier = Modifier.padding(12.dp)
