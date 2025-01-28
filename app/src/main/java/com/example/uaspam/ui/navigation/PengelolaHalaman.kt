@@ -10,13 +10,14 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.uaspam.ui.HalamanHome
 import com.example.uaspam.ui.buku.view.DestinasiDetail
-import com.example.uaspam.ui.buku.view.DestinasiEntry
+import com.example.uaspam.ui.buku.view.DestinasiEntryBuku
 import com.example.uaspam.ui.buku.view.DestinasiUpdate
 import com.example.uaspam.ui.buku.view.DetailView
 import com.example.uaspam.ui.buku.view.HomeBukuView
 import com.example.uaspam.ui.buku.view.InsertBukuView
 import com.example.uaspam.ui.buku.view.UpdateScreen
 import com.example.uaspam.ui.kategori.view.DestinasiDKategori
+import com.example.uaspam.ui.kategori.view.DestinasiEtKategori
 import com.example.uaspam.ui.kategori.view.DestinasiUpKategori
 import com.example.uaspam.ui.kategori.view.DetailKategoriView
 import com.example.uaspam.ui.kategori.view.HomeKategoriView
@@ -52,13 +53,13 @@ fun PengelolaHalaman(
         {
             HomeBukuView(
                 onBackClick = {navController.navigate(DestinasiHalamanHome.route)},
-                navigateToItemEntry = {navController.navigate(DestinasiEntry.route)},
+                navigateToItemEntry = {navController.navigate(DestinasiEntryBuku.route)},
                 onDetailClick = { idBuku ->
                     navController.navigate("${DestinasiDetail.route}/$idBuku")
                 }
             )
         }
-        composable(DestinasiEntry.route) {
+        composable(DestinasiEntryBuku.route) {
             InsertBukuView(
                 navigateBack = {
                     navController.navigate(DestinasiHome.route) {
@@ -109,14 +110,14 @@ fun PengelolaHalaman(
         {
             HomeKategoriView(
 //                onBackClick = {navController.navigate(DestinasiHalamanHome.route)},
-                navigateToItemEntry = {navController.navigate(DestinasiEntry.route)},
+                navigateToItemEntry = {navController.navigate(DestinasiEtKategori.route)},
                 onDetailClick = { idKategori ->
                     navController.navigate("${DestinasiDKategori.route}/$idKategori")
                 }
             )
         }
 
-        composable(DestinasiEntry.route) {
+        composable(DestinasiEtKategori.route) {
             InsertKategoriView(
                 navigateBack = {
                     navController.navigate(DestinasiKategori.route) {
