@@ -16,7 +16,16 @@ import com.example.uaspam.ui.buku.view.DetailView
 import com.example.uaspam.ui.buku.view.HomeBukuView
 import com.example.uaspam.ui.buku.view.InsertBukuView
 import com.example.uaspam.ui.buku.view.UpdateScreen
+import com.example.uaspam.ui.kategori.view.DestinasiDKategori
+import com.example.uaspam.ui.kategori.view.DestinasiUpKategori
+import com.example.uaspam.ui.kategori.view.DetailKategoriView
 import com.example.uaspam.ui.kategori.view.HomeKategoriView
+import com.example.uaspam.ui.kategori.view.InsertKategoriView
+import com.example.uaspam.ui.kategori.view.UpdateKategoriView
+import com.example.uaspam.ui.penulis.view.DestinasiDetPenulis
+import com.example.uaspam.ui.penulis.view.DestinasiPenulis
+import com.example.uaspam.ui.penulis.view.HomePenulisView
+import com.example.uaspam.ui.penulis.view.InsertPenulisView
 
 @Composable
 fun PengelolaHalaman(
@@ -35,7 +44,7 @@ fun PengelolaHalaman(
                     navController.navigate(DestinasiHome.route)
                 },
                 onNavigateToKategori = {
-                    navController.navigate(DestinasiHome.route)
+                    navController.navigate(DestinasiKategori.route)
                 }
             )
         }
@@ -96,13 +105,83 @@ fun PengelolaHalaman(
 
         // tabel kategori
 
-//        composable(DestinasiHome.route)
+        composable(DestinasiKategori.route)
+        {
+            HomeKategoriView(
+//                onBackClick = {navController.navigate(DestinasiHalamanHome.route)},
+                navigateToItemEntry = {navController.navigate(DestinasiEntry.route)},
+                onDetailClick = { idKategori ->
+                    navController.navigate("${DestinasiDKategori.route}/$idKategori")
+                }
+            )
+        }
+
+        composable(DestinasiEntry.route) {
+            InsertKategoriView(
+                navigateBack = {
+                    navController.navigate(DestinasiKategori.route) {
+                        popUpTo(DestinasiKategori.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
+
+        composable(
+            DestinasiDKategori.routeWithArgs,
+            arguments = listOf(
+                navArgument(DestinasiDKategori.IDKATEGORI) {
+                    type = NavType.StringType })
+        ) { backStackEntry ->
+            val idKategori = backStackEntry.arguments?.getString(DestinasiDKategori.IDKATEGORI) ?: ""
+            DetailKategoriView(
+                navigateBack = { navController.navigateUp() },
+                onEditClick = { navController.navigate("update") },
+                onDeleteClick = { navController.navigateUp() }
+//                idKategori = idKategori // Pass the idBuku to the Detail View
+            )
+        }
+
+        composable(
+            DestinasiUpKategori.routeWithArgs,
+            arguments = listOf(
+                navArgument(DestinasiUpKategori.IDKATEGORI) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            UpdateKategoriView(
+                NavigateBack = {
+                    navController.popBackStack()
+                },
+                onNavigate = {
+                    navController.popBackStack()
+                },
+            )
+        }
+
+        // tabel penulis
+//
+//        composable(DestinasiPenulis.route)
 //        {
-//            HomeKategoriView(
-////                onBackClick = {navController.navigate(DestinasiHalamanHome.route)},
+//            HomePenulisView(
+//                onBackClick = {navController.navigate(DestinasiHalamanHome.route)},
 //                navigateToItemEntry = {navController.navigate(DestinasiEntry.route)},
-//                onDetailClick = { idKategori ->
-//                    navController.navigate("${DestinasiDetail.route}/$idKategori")
+//                onDetailClick = { idPenulis ->
+//                    navController.navigate("${DestinasiDetPenulis.route}/$idPenulis")
+//                }
+//            )
+//        }
+//
+//        composable(DestinasiEntry.route) {
+//            InsertPenulisView(
+//                navigateBack = {
+//                    navController.navigate(DestinasiPenulis.route) {
+//                        popUpTo(DestinasiPenulis.route) {
+//                            inclusive = true
+//                        }
+//                    }
 //                }
 //            )
 //        }
