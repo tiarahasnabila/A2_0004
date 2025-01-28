@@ -17,3 +17,11 @@ sealed class HomeuiState{
     object Loading: HomeuiState()
 }
 
+class HomePenerbitViewModel(private val penerbit: PenerbitRepository): ViewModel(){
+    var penerbitUiState: HomeuiState by mutableStateOf(HomeuiState.Loading)
+        private set
+
+    init {
+        getPenerbit()
+    }
+
