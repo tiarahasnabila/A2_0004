@@ -38,3 +38,15 @@ class HomePenerbitViewModel(private val penerbit: PenerbitRepository): ViewModel
         }
     }
 
+    fun deletePenerbit(id: String){
+        viewModelScope.launch {
+            try {
+                penerbit.deletePenerbit(id)
+            } catch (e: IOException){
+                HomeuiState.Error
+            } catch (e: HttpException){
+                HomeuiState.Error
+            }
+        }
+    }
+}
