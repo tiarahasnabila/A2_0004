@@ -17,3 +17,11 @@ sealed class HomeuiState{
     object Loading: HomeuiState()
 }
 
+class HomeKategoriViewModel(private val kategori: KategoriRepository): ViewModel(){
+    var kategoriUiState: HomeuiState by mutableStateOf(HomeuiState.Loading)
+        private set
+
+    init {
+        getKategori()
+    }
+
