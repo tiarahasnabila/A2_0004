@@ -28,7 +28,7 @@ import com.example.uaspam.ui.kategori.viewmodel.InsertUiState
 import com.example.uaspam.ui.navigation.DestinasiNavigasi
 import kotlinx.coroutines.launch
 
-object DestinasiEntry: DestinasiNavigasi {
+object DestinasiEtKategori: DestinasiNavigasi {
     override val route = "item_entry"
     override val titleRes = "Tambah Kategori"
 }
@@ -47,7 +47,7 @@ fun InsertKategoriView(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CostumeTopAppBar(
-                title = DestinasiEntry.titleRes,
+                title = DestinasiEtKategori.titleRes,
                 canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
                 navigateUp = navigateBack
