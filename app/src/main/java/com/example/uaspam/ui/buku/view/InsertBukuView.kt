@@ -29,8 +29,8 @@ import com.example.uaspam.ui.navigation.CostumeTopAppBar
 import com.example.uaspam.ui.navigation.DestinasiNavigasi
 import kotlinx.coroutines.launch
 
-object DestinasiEntry: DestinasiNavigasi {
-    override val route = "item_entry"
+object DestinasiEntryBuku: DestinasiNavigasi {
+    override val route = "Tambah Buku"
     override val titleRes = "Tambah Buku"
 }
 
@@ -48,7 +48,7 @@ fun InsertBukuView(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CostumeTopAppBar(
-                title = DestinasiEntry.titleRes,
+                title = DestinasiEntryBuku.titleRes,
                 canNavigateBack = true,
                 scrollBehavior = scrollBehavior,
                 navigateUp = navigateBack
