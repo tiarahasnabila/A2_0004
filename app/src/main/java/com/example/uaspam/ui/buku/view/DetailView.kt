@@ -111,3 +111,132 @@ fun DetailView(
     }
 }
 
+@Composable
+fun BodyDetailBuku(
+    modifier: Modifier = Modifier,
+    detailUiState: DetailUiState,
+    onDeleteClick: () -> Unit
+) {
+    when {
+        detailUiState.isLoading -> {
+            Box(
+                modifier = modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+        detailUiState.isError -> {
+            Box(
+                modifier = modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = detailUiState.errorMessage,
+                    color = Color.Red
+                )
+            }
+        }
+        detailUiState.isUiEventNotEmpty -> {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                ItemDetailBuku(
+                    buku = detailUiState.detailUiEvent.toBuku(),
+                    modifier = modifier
+                )
+
+                Spacer(modifier = Modifier.padding(8.dp))
+                Button(
+                    onClick = onDeleteClick,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "Delete")
+                }
+            }
+        }
+    }
+}
+
+
+@Composable
+fun ItemDetailBuku(
+    modifier: Modifier = Modifier,
+    buku: Buku,
+){
+
+    // Log the idBuku
+    Log.d("BookID", "Book ID: ${buku.idBuku}")
+
+    Card(
+        modifier = modifier.fillMaxWidth().padding(top = 20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+        ) {
+            ComponentDetailBuku(judul = "Id Buku", isinya = buku.idBuku.toString())
+            ComponentDetailBuku(judul = "Nama Buku", isinya = buku.namaBuku)
+            ComponentDetailBuku(judul = "Deskripsi Buku", isinya = buku.deskripsiBuku)
+            ComponentDetailBuku(judul = "Tanggal Buku", isinya = buku.tanggalTerbit)
+            ComponentDetailBuku(judul = "Status Buku", isinya = buku.statusBuku)
+            ComponentDetailBuku(judul = "Id Kategori", isinya = buku.idKategori.toString())
+            ComponentDetailBuku(judul = "Id Penulis", isinya = buku.idPenulis.toString())
+            ComponentDetailBuku(judul = "Id Penerbit", isinya = buku.idPenerbit.toString())
+        }
+    }
+}
+
+@Composable
+fun ComponentDetailBuku(
+    modifier: Modifier = Modifier,
+    judul: String,
+    isinya: String,
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "$judul:",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.Gray
+        )
+        Text(
+            text = isinya,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+        )
+    }
+}
+
+@Composable
+private fun DeleteConfirmationDialog(
+    onDeleteConfirm: () -> Unit,
+    onDeleteCancel: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    AlertDialog(
+        onDismissRequest = { /* Do nothing */ },
+        title = { Text("Delete Data") },
+        text = { Text("Apakah anda yakin ingin menghapus data?") },
+        dismissButton = {
+            TextButton(onClick = { onDeleteCancel() }) {
+                Text(text = "Cancel")
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { onDeleteConfirm() }) {
+                Text(text = "Yes")
+            }
+        }
+    )
+}
+
