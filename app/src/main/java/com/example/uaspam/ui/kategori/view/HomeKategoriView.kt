@@ -206,4 +206,49 @@ fun KategoriLayout(
     }
 }
 
+@Composable
+fun KategoriCard(
+    kategori: Kategori,
+    modifier: Modifier = Modifier,
+    onDeleteClick: (Kategori) -> Unit = {}
+){
+    Card (
+        modifier = modifier,
+        shape = MaterialTheme.shapes.medium,
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+    ){
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ){
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = kategori.idKategori.toString(),
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Spacer(Modifier.weight(1f))
+                IconButton(onClick = {
+                    Log.d("KategoriID", "Selected Kategori ID: ${kategori.idKategori}")
+                    onDeleteClick(kategori) }) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = null,
+                    )
+                }
+                Text(
+                    text = kategori.namaKategori,
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+            Text(
+                text = kategori.deskripsiKategori,
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+    }
+}
+
 
