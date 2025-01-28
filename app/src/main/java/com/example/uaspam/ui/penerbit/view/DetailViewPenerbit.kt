@@ -111,3 +111,53 @@ fun DetailViewPenerbit(
     }
 }
 
+@Composable
+fun BodyDetailPenerbit(
+    modifier: Modifier = Modifier,
+    detailUiState: DetailUiState,
+    onDeleteClick: () -> Unit
+) {
+    when {
+        detailUiState.isLoading -> {
+            Box(
+                modifier = modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+        detailUiState.isError -> {
+            Box(
+                modifier = modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = detailUiState.errorMessage,
+                    color = Color.Red
+                )
+            }
+        }
+        detailUiState.isUiEventNotEmpty -> {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                ItemDetailPenerbit(
+                    penerbit = detailUiState.detailUiEvent.toPenerbit(),
+                    modifier = modifier
+                )
+
+                Spacer(modifier = Modifier.padding(8.dp))
+                Button(
+                    onClick = onDeleteClick,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "Delete")
+                }
+            }
+        }
+    }
+}
+
+
