@@ -17,7 +17,26 @@ sealed class HomeuiState{
     object Loading: HomeuiState()
 }
 
+class HomePenulisViewModel(private val penulis: PenulisRepository): ViewModel(){
+    var penulisUiState: HomeuiState by mutableStateOf(HomeuiState.Loading)
+        private set
 
+    init {
+        getPenulis()
+    }
+
+    fun getPenulis(){
+        viewModelScope.launch {
+            penulisUiState = HomeuiState.Loading
+            penulisUiState = try {
+                HomeuiState.Success(penulis.getPenulis())
+            } catch (e: IOException){
+                HomeuiState.Error
+            } catch (e: HttpException){
+                HomeuiState.Error
+            }
+        }
+    }
 
     fun deletePenulis(id: String){
         viewModelScope.launch {
