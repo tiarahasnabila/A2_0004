@@ -56,3 +56,68 @@ object DestinasiKategori : DestinasiNavigasi {
     override val titleRes = "Home Kategori"
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeKategoriView(
+    navigateToItemEntry: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDetailClick: (String) -> Unit,
+    oonBackClick: () -> Unit = {},
+    viewModel: HomeKategoriViewModel = viewModel(factory = PenyediaViewModel.Factory)
+){
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var selectedKategori: Kategori? by remember { mutableStateOf(null) }
+
+    Scaffold (
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiKategori.titleRes,
+                canNavigateBack = false,
+                scrollBehavior = scrollBehavior,
+                onRefresh = {
+                    viewModel.getKategori()
+                }
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = navigateToItemEntry,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp)
+            )
+            {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Kategori" )
+            }
+        },
+    ){innerPadding ->
+        HomeStatus(
+            homeuiState = viewModel.kategoriUiState,
+            retryAction = { viewModel.getKategori()},
+            modifier = Modifier.padding(innerPadding),
+            onDetailClick = onDetailClick,
+            onDeleteClick = { kategori ->
+                selectedKategori = kategori
+                showDeleteDialog = true
+            }
+        )
+
+        if (showDeleteDialog && selectedKategori != null) {
+            DeleteConfirmationDialog(
+                onDeleteConfirm = {
+                    selectedKategori?.let { kategori ->
+                        viewModel.deleteKategori(kategori.idKategori.toString())
+                    }
+                    showDeleteDialog = false
+                },
+                onDeleteCancel = {
+                    showDeleteDialog = false
+                }
+            )
+        }
+    }
+}
+
+
