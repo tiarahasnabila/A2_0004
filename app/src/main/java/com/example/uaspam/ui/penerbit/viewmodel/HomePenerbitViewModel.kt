@@ -25,3 +25,16 @@ class HomePenerbitViewModel(private val penerbit: PenerbitRepository): ViewModel
         getPenerbit()
     }
 
+    fun getPenerbit(){
+        viewModelScope.launch {
+            penerbitUiState = HomeuiState.Loading
+            penerbitUiState = try {
+                HomeuiState.Success(penerbit.getPenerbit())
+            } catch (e: IOException){
+                HomeuiState.Error
+            } catch (e: HttpException){
+                HomeuiState.Error
+            }
+        }
+    }
+
