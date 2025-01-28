@@ -31,4 +31,17 @@ class UpdatePenerbitViewModel (
             }
         }
 
+        fun updateInsertPenerbitState(insertUiEvent: InsertUiEvent) {
+            updateUiState = updateUiState.copy(insertUiEvent = insertUiEvent)
+        }
 
+        fun updateData() {
+            viewModelScope.launch {
+                try {
+                    penerbitRepository.updatePenerbit(_idPenerbit, updateUiState.insertUiEvent.toPenerbit())
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
