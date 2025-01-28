@@ -136,4 +136,11 @@ fun HalamanHome(
             onNavigateToKategori()
         }
     }
+
+    LaunchedEffect(uiState.navigateToPenulis) {
+        if (uiState.navigateToPenulis) {
+            viewModel.resetNavigation()
+            onNavigateToPenulis()
+        }
+    }
 }
