@@ -5,7 +5,7 @@ import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.uaspam.ui.PenyediaViewModel.aplikasiKontak
+import com.example.uaspam.ui.ViewModel.HalamanHomeViewModel
 import com.example.uaspam.ui.buku.viewmodel.DetailBukuViewModel
 import com.example.uaspam.ui.buku.viewmodel.HomeBukuViewModel
 import com.example.uaspam.ui.buku.viewmodel.InsertBukuViewModel
@@ -26,6 +26,12 @@ import com.example.uaspam.ui.penulis.viewmodel.UpdatePenulisViewModel
 
 object PenyediaViewModel {
     val Factory = viewModelFactory {
+
+        //HOME
+        initializer {
+            HalamanHomeViewModel(
+            )
+        }
 
         // tabel buku
 
