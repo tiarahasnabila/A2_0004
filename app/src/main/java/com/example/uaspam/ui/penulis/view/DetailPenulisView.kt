@@ -52,3 +52,63 @@ object DestinasiDetPenulis : DestinasiNavigasi {
     val routeWithArgs = "$route/{$IDPENULIS}"
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DetailViewPenulis(
+    modifier: Modifier = Modifier,
+    navigateBack: () -> Unit,
+    onEditClick: () -> Unit,
+    onDeleteClick: () -> Unit = { },
+    viewModel: DetailPenulisViewModel = viewModel(factory = PenyediaViewModel.Factory)
+){
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiDetPenulis.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onEditClick,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit Penulis",
+                )
+            }
+        }
+    ) { innerPadding ->
+        var deleteConfirmationRequired by rememberSaveable { mutableStateOf(false) }
+
+        BodyDetailPenulis (
+            detailUiState = viewModel.detailUiState,
+            modifier = Modifier.padding(innerPadding),
+            onDeleteClick = {
+                deleteConfirmationRequired = true
+            }
+        )
+
+        if (deleteConfirmationRequired) {
+            DeleteConfirmationDialog(
+                onDeleteConfirm = {
+                    viewModel.deletePenulis()
+                    onDeleteClick()
+                    deleteConfirmationRequired = false
+                },
+                onDeleteCancel = {
+                    deleteConfirmationRequired = false
+                },
+                modifier = Modifier.padding(8.dp)
+            )
+        }
+    }
+}
+
