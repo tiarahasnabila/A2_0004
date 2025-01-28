@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.uaspam.ui.buku.viewmodel.BukuApp
+import com.example.uaspam.ui.navigation.PengelolaHalaman
 import com.example.uaspam.ui.theme.UasPAMTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             UasPAMTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    BukuApp(
+                    PengelolaHalaman(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
