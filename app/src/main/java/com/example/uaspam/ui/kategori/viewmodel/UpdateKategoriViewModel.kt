@@ -30,3 +30,18 @@ class UpdateKategoriViewModel (
                 }
             }
         }
+
+        fun updateInsertKategoriState(insertUiEvent: InsertUiEvent) {
+            updateUiState = updateUiState.copy(insertUiEvent = insertUiEvent)
+        }
+
+        fun updateData() {
+            viewModelScope.launch {
+                try {
+                    kategoriRepository.updateKategori(_idKategori, updateUiState.insertUiEvent.toKategori())
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
