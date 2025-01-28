@@ -27,3 +27,29 @@ object DestinasiUpdate: DestinasiNavigasi {
     override val titleRes = "Update Buku"
 }
 
+object DestinasiKategori : DestinasiNavigasi {
+    override val route = "kategori"
+    override val titleRes = "Home Kategori"
+}
+
+object DestinasiDKategori : DestinasiNavigasi {
+    override val route = "detail Kategori"
+    override val titleRes = "Detail Kategori"
+    const val IDKATEGORI = "idKategori"
+    val routeWithArgs = "$route/{$IDKATEGORI}"
+}
+
+object DestinasiUpKategori : DestinasiNavigasi {
+    override val route = "update"
+    override val titleRes = "Update Kategori"
+}
+
+object DestinasiPenulis : DestinasiNavigasi {
+    override val route = "penulis"
+    override val titleRes = "Home Penulis"
+}
+
+
+
+
+
