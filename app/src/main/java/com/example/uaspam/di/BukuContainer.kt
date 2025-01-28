@@ -28,7 +28,7 @@ interface AppContainer{
 }
 
 class BukuContainer : AppContainer {
-    private val baseUrl = "http://10.0.2.2:3000/api/buku/" //localhost diganti ip kalau run di hp
+    private val baseUrl = "http://10.0.2.2:3000/api/"//localhost diganti ip kalau run di hp
     private val json = Json { ignoreUnknownKeys = true }
 
     val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
